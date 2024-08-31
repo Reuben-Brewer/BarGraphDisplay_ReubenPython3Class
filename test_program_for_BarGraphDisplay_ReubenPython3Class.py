@@ -6,7 +6,7 @@ reuben.brewer@gmail.com
 www.reubotics.com
 
 Apache 2 License
-Software Revision A, 07/31/2024
+Software Revision B, 08/31/2024
 
 Verified working on: Python 3.8 for Windows 10 64-bit (no Ubuntu, Raspberry Pi, or Mac testing yet).
 '''
@@ -66,6 +66,9 @@ def GUI_update_clock():
     global MyPrint_OPEN_FLAG
     global SHOW_IN_GUI_MyPrint_FLAG
 
+    global SINUSOIDAL_INPUT_TO_COMMAND_1
+    global SINUSOIDAL_INPUT_TO_COMMAND_2
+
     if USE_GUI_FLAG == 1:
         if EXIT_PROGRAM_FLAG == 0:
         #########################################################
@@ -73,6 +76,9 @@ def GUI_update_clock():
 
             #########################################################
             if BarGraphDisplay_OPEN_FLAG == 1:
+                BarGraphDisplay_ReubenPython3ClassObject.UpdateValue("Var1", SINUSOIDAL_INPUT_TO_COMMAND_1) #TOO SLOW TO UPDATE FROM NON-GUI THREAD!
+                BarGraphDisplay_ReubenPython3ClassObject.UpdateValue("Var2", SINUSOIDAL_INPUT_TO_COMMAND_2) #TOO SLOW TO UPDATE FROM NON-GUI THREAD!
+
                 BarGraphDisplay_ReubenPython3ClassObject.GUI_update_clock()
             #########################################################
 
@@ -150,53 +156,6 @@ def GUI_Thread():
         Tab_MyPrint = root
         #################################################
 
-    #################################################
-    #################################################
-
-    #################################################
-    #################################################
-    global BarGraphDisplay_ReubenPython3ClassObject
-    global BarGraphDisplay_OPEN_FLAG
-    global GUI_ROW_BarGraphDisplay
-    global GUI_COLUMN_BarGraphDisplay
-    global GUI_PADX_BarGraphDisplay
-    global GUI_PADY_BarGraphDisplay
-    global GUI_ROWSPAN_BarGraphDisplay
-    global GUI_COLUMNSPAN_BarGraphDisplay
-
-    global BarGraphDisplay_Variables_ListOfDicts
-    BarGraphDisplay_Variables_ListOfDicts = [dict([("Name", "Var1"), ("StartingValue", 50.0), ("MinValue", -100), ("MaxValue", 100)]),
-                                             dict([("Name", "Var2"), ("StartingValue", -25), ("MinValue", -50), ("MaxValue", 50)]),
-                                             dict([("Name", "foo"), ("StartingValue", 33), ("MinValue", -33), ("MaxValue", 33), ("FontSize", 8), ("PositiveColor", TKinter_LightBlueColor), ("NegativeColor", TKinter_LightYellowColor)])]
-
-    global BarGraphDisplay_ReubenPython3ClassObject_GUIparametersDict
-    BarGraphDisplay_ReubenPython3ClassObject_GUIparametersDict = dict([("root", Tab_BarGraphDisplay),
-                                    ("GUI_ROW", GUI_ROW_BarGraphDisplay),
-                                    ("GUI_COLUMN", GUI_COLUMN_BarGraphDisplay),
-                                    ("GUI_PADX", GUI_PADX_BarGraphDisplay),
-                                    ("GUI_PADY", GUI_PADY_BarGraphDisplay),
-                                    ("GUI_ROWSPAN", GUI_ROWSPAN_BarGraphDisplay),
-                                    ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_BarGraphDisplay)])
-
-    global BarGraphDisplay_ReubenPython3ClassObject_setup_dict
-    BarGraphDisplay_ReubenPython3ClassObject_setup_dict = dict([("GUIparametersDict", BarGraphDisplay_ReubenPython3ClassObject_GUIparametersDict),
-                                                                ("Variables_ListOfDicts", BarGraphDisplay_Variables_ListOfDicts),
-                                                                ("Canvas_Width", 500),
-                                                                ("Canvas_Height", 300),
-                                                                ("BarWidth", 100),
-                                                                ("BarPadX", 10),
-                                                                ("FontSize", 12),
-                                                                ("NegativeColor", TKinter_LightRedColor),
-                                                                ("PositiveColor", TKinter_LightGreenColor)])
-
-    try:
-        BarGraphDisplay_ReubenPython3ClassObject = BarGraphDisplay_ReubenPython3Class(BarGraphDisplay_ReubenPython3ClassObject_setup_dict)
-        BarGraphDisplay_OPEN_FLAG = BarGraphDisplay_ReubenPython3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
-
-    except:
-        exceptions = sys.exc_info()[0]
-        print("BarGraphDisplay_ReubenPython3ClassObject __init__: Exceptions: %s" % exceptions, 0)
-        traceback.print_exc()
     #################################################
     #################################################
 
@@ -338,6 +297,12 @@ if __name__ == '__main__':
     global StartingTime_MainLoopThread
     StartingTime_MainLoopThread = -11111.0
 
+    global SINUSOIDAL_INPUT_TO_COMMAND_1
+    SINUSOIDAL_INPUT_TO_COMMAND_1 = 0.0
+
+    global SINUSOIDAL_INPUT_TO_COMMAND_2
+    SINUSOIDAL_INPUT_TO_COMMAND_2 = 0.0
+
     global SINUSOIDAL_MOTION_INPUT_ROMtestTimeToPeakAngle
     SINUSOIDAL_MOTION_INPUT_ROMtestTimeToPeakAngle = 2.0
 
@@ -386,6 +351,44 @@ if __name__ == '__main__':
         Tab_MainControls = None
         Tab_BarGraphDisplay = None
         Tab_MyPrint = None
+    #################################################
+    #################################################
+
+    #################################################
+    #################################################
+    global BarGraphDisplay_Variables_ListOfDicts
+    BarGraphDisplay_Variables_ListOfDicts = [dict([("Name", "Var1"), ("StartingValue", 50.0), ("MinValue", -100), ("MaxValue", 100)]),
+                                             dict([("Name", "Var2"), ("StartingValue", -25), ("MinValue", -50), ("MaxValue", 50)]),
+                                             dict([("Name", "foo"), ("StartingValue", 33), ("MinValue", -33), ("MaxValue", 33), ("FontSize", 8), ("PositiveColor", TKinter_LightBlueColor), ("NegativeColor", TKinter_LightYellowColor)])]
+
+    global BarGraphDisplay_ReubenPython3ClassObject_GUIparametersDict
+    BarGraphDisplay_ReubenPython3ClassObject_GUIparametersDict = dict([("root", Tab_BarGraphDisplay),
+                                    ("GUI_ROW", GUI_ROW_BarGraphDisplay),
+                                    ("GUI_COLUMN", GUI_COLUMN_BarGraphDisplay),
+                                    ("GUI_PADX", GUI_PADX_BarGraphDisplay),
+                                    ("GUI_PADY", GUI_PADY_BarGraphDisplay),
+                                    ("GUI_ROWSPAN", GUI_ROWSPAN_BarGraphDisplay),
+                                    ("GUI_COLUMNSPAN", GUI_COLUMNSPAN_BarGraphDisplay)])
+
+    global BarGraphDisplay_ReubenPython3ClassObject_setup_dict
+    BarGraphDisplay_ReubenPython3ClassObject_setup_dict = dict([("GUIparametersDict", BarGraphDisplay_ReubenPython3ClassObject_GUIparametersDict),
+                                                                ("Variables_ListOfDicts", BarGraphDisplay_Variables_ListOfDicts),
+                                                                ("Canvas_Width", 500),
+                                                                ("Canvas_Height", 300),
+                                                                ("BarWidth", 100),
+                                                                ("BarPadX", 10),
+                                                                ("FontSize", 12),
+                                                                ("NegativeColor", TKinter_LightRedColor),
+                                                                ("PositiveColor", TKinter_LightGreenColor)])
+
+    try:
+        BarGraphDisplay_ReubenPython3ClassObject = BarGraphDisplay_ReubenPython3Class(BarGraphDisplay_ReubenPython3ClassObject_setup_dict)
+        BarGraphDisplay_OPEN_FLAG = BarGraphDisplay_ReubenPython3ClassObject.OBJECT_CREATED_SUCCESSFULLY_FLAG
+
+    except:
+        exceptions = sys.exc_info()[0]
+        print("BarGraphDisplay_ReubenPython3ClassObject __init__: Exceptions: %s" % exceptions, 0)
+        traceback.print_exc()
     #################################################
     #################################################
 
@@ -451,18 +454,11 @@ if __name__ == '__main__':
 
             ################################################### SET's
             ###################################################
-            time_gain = math.pi / (2.0 * SINUSOIDAL_MOTION_INPUT_ROMtestTimeToPeakAngle)
-
-            SINUSOIDAL_INPUT_TO_COMMAND_1 = (SINUSOIDAL_MOTION_INPUT_MaxValue_1 + SINUSOIDAL_MOTION_INPUT_MinValue_1)/2.0 + 0.5*abs(SINUSOIDAL_MOTION_INPUT_MaxValue_1 - SINUSOIDAL_MOTION_INPUT_MinValue_1)*math.sin(time_gain*CurrentTime_MainLoopThread)
-            SINUSOIDAL_INPUT_TO_COMMAND_2 = (SINUSOIDAL_MOTION_INPUT_MaxValue_2 + SINUSOIDAL_MOTION_INPUT_MinValue_2)/2.0 + 0.5*abs(SINUSOIDAL_MOTION_INPUT_MaxValue_2 - SINUSOIDAL_MOTION_INPUT_MinValue_2)*math.sin(time_gain*CurrentTime_MainLoopThread + math.pi/4.0)
-
             if USE_SINUSOIDAL_TEST_FLAG == 1:
-                BarGraphDisplay_ReubenPython3ClassObject.UpdateValue("Var1", SINUSOIDAL_INPUT_TO_COMMAND_1)
-                BarGraphDisplay_ReubenPython3ClassObject.UpdateValue("Var2", SINUSOIDAL_INPUT_TO_COMMAND_2)
-            else:
-                pass
-                #BarGraphDisplay_ReubenPython3ClassObject.UpdateValue("Var1", SINUSOIDAL_MOTION_INPUT_MaxValue_1)
-                #BarGraphDisplay_ReubenPython3ClassObject.UpdateValue("Var2", SINUSOIDAL_MOTION_INPUT_MinValue_2)
+                time_gain = math.pi / (2.0 * SINUSOIDAL_MOTION_INPUT_ROMtestTimeToPeakAngle)
+
+                SINUSOIDAL_INPUT_TO_COMMAND_1 = (SINUSOIDAL_MOTION_INPUT_MaxValue_1 + SINUSOIDAL_MOTION_INPUT_MinValue_1)/2.0 + 0.5*abs(SINUSOIDAL_MOTION_INPUT_MaxValue_1 - SINUSOIDAL_MOTION_INPUT_MinValue_1)*math.sin(time_gain*CurrentTime_MainLoopThread)
+                SINUSOIDAL_INPUT_TO_COMMAND_2 = (SINUSOIDAL_MOTION_INPUT_MaxValue_2 + SINUSOIDAL_MOTION_INPUT_MinValue_2)/2.0 + 0.5*abs(SINUSOIDAL_MOTION_INPUT_MaxValue_2 - SINUSOIDAL_MOTION_INPUT_MinValue_2)*math.sin(time_gain*CurrentTime_MainLoopThread + math.pi/4.0)
             ###################################################
             ###################################################
 
@@ -478,6 +474,11 @@ if __name__ == '__main__':
     ################################################# THIS IS THE EXIT ROUTINE!
     #################################################
     print("Exiting main program 'test_program_for_BarGraphDisplay_ReubenPython3Class.")
+
+    #################################################
+    if BarGraphDisplay_OPEN_FLAG == 1:
+        BarGraphDisplay_ReubenPython3ClassObject.ExitProgram_Callback()
+    #################################################
 
     #################################################
     if MyPrint_OPEN_FLAG == 1:

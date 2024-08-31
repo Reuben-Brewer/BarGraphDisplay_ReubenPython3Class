@@ -6,7 +6,7 @@ reuben.brewer@gmail.com
 www.reubotics.com
 
 Apache 2 License
-Software Revision A, 07/31/2024
+Software Revision B, 08/31/2024
 
 Verified working on: Python 3.8 for Windows 10 64-bit (no Ubuntu, Raspberry Pi, or Mac testing yet).
 '''
@@ -60,11 +60,6 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
         self.TKinter_WhiteColor = '#%02x%02x%02x' % (255, 255, 255)  # RGB
         #################################################
 
-        '''
-        self.Input_Xvalue = 0
-        self.Input_Yvalue = 0
-        self.DotHighlightedLikeButtonPress_State = 0
-        '''
         #########################################################
         #########################################################
 
@@ -141,7 +136,7 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
             ##########################################
             if "GUI_ROWSPAN" in self.GUIparametersDict:
-                self.GUI_ROWSPAN = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("GUI_ROWSPAN", self.GUIparametersDict["GUI_ROWSPAN"], 0.0, 1000.0))
+                self.GUI_ROWSPAN = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("GUI_ROWSPAN", self.GUIparametersDict["GUI_ROWSPAN"], 1.0, 1000.0))
             else:
                 self.GUI_ROWSPAN = 1
 
@@ -150,7 +145,7 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
             ##########################################
             if "GUI_COLUMNSPAN" in self.GUIparametersDict:
-                self.GUI_COLUMNSPAN = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("GUI_COLUMNSPAN", self.GUIparametersDict["GUI_COLUMNSPAN"], 0.0, 1000.0))
+                self.GUI_COLUMNSPAN = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("GUI_COLUMNSPAN", self.GUIparametersDict["GUI_COLUMNSPAN"], 1.0, 1000.0))
             else:
                 self.GUI_COLUMNSPAN = 1
 
@@ -383,8 +378,6 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
                 #########################################################
                 #########################################################
 
-
-
             #########################################################
             #########################################################
             #########################################################
@@ -476,12 +469,7 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         self.MyCanvas["highlightthickness"] = 0  #IMPORTANT Remove light grey border around the Canvas
         self.MyCanvas["bd"] = 0 #IMPORTANT Setting "bd", along with "highlightthickness" to 0 makes the Canvas be in the (0,0) pixel location instead of offset by those thicknesses
-        self.MyCanvas.grid(row=0,
-                                                                        column=0,
-                                                                        padx=1,
-                                                                        pady=1,
-                                                                        columnspan=1,
-                                                                        rowspan=1)
+        self.MyCanvas.grid(row=0, column=0, padx=1, pady=1, columnspan=1, rowspan=1)
         #########################################################
         #########################################################
 
@@ -518,6 +506,13 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
     ##########################################################################################################
     ##########################################################################################################
     def __del__(self):
+        pass
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    def ExitProgram_Callback(self):
         pass
     ##########################################################################################################
     ##########################################################################################################
@@ -736,7 +731,7 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
             #y = (self.Variables_DictOfDicts[VariableNameString]["CanvasRectangleCoordinates"][1] + self.Variables_DictOfDicts[VariableNameString]["CanvasRectangleCoordinates"][3])/2.0
 
             #Set text fixed at the bottom of the graph
-            y = self.ConvertMathPointToCanvasCoordinates([0, 0.9*self.MinValue_AcrossAllVariables])[1]
+            y = self.ConvertMathPointToCanvasCoordinates([0, 0.85*self.MinValue_AcrossAllVariables])[1]
 
             self.Variables_DictOfDicts[VariableNameString]["CanvasTextCoordinates"][0] = x
             self.Variables_DictOfDicts[VariableNameString]["CanvasTextCoordinates"][1] = y
@@ -1038,17 +1033,6 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
                                                                                                               self.ConvertFloatToStringWithNumberOfLeadingNumbersAndDecimalPlaces_NumberOrListInput(self.Variables_DictOfDicts[VariableNameString]["Value"], 0, 3))
                         #######################################################
 
-                        #######################################################
-                        '''
-                        if 1:#VariableNameString == "Var1":
-                            print("VariableNameString: " + VariableNameString +
-                                  ", Value = " + str(self.Variables_DictOfDicts[VariableNameString]["Value"]) +
-                                  ", Rectangle = " + str(self.Variables_DictOfDicts[VariableNameString]["CanvasRectangleCoordinates"]) +
-                                  ", Text = " + str(self.Variables_DictOfDicts[VariableNameString]["CanvasTextCoordinates"]))
-                        '''
-                        #######################################################
-
-
                     #######################################################
                     #######################################################
 
@@ -1066,29 +1050,9 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
                                                          HorizontalLineCoords_RightOfLine_CanvasCoord[1],
                                                          fill="black",
                                                          width=1,
-                                                         tags="HorizontalLine_tag") #dash=(10)
+                                                         tags="HorizontalLine_tag")
                     #######################################################
                     #######################################################
-
-                    '''
-                    #######################################################
-                    #######################################################
-                    self.Crosshairs_VerticalLine_Xvalue = 0
-
-                    VerticalLineCoords_BottomOfLine_CanvasCoord = self.ConvertMathPointToCanvasCoordinates([self.Crosshairs_VerticalLine_Xvalue, -1.0])
-                    VerticalLineCoords_TopOfLine_CanvasCoord = self.ConvertMathPointToCanvasCoordinates("[self.Crosshairs_VerticalLine_Xvalue, 1.0])
-
-                    self.MyCanvas.delete("VerticalLine_tag")
-                    self.MyCanvas.create_line(VerticalLineCoords_BottomOfLine_CanvasCoord[0],
-                                                         VerticalLineCoords_BottomOfLine_CanvasCoord[1] - 1*self.Canvas_BorderWidth, #Don't cross the border
-                                                         VerticalLineCoords_TopOfLine_CanvasCoord[0],
-                                                         VerticalLineCoords_TopOfLine_CanvasCoord[1] + 1*self.Canvas_BorderWidth, #Don't cross the border
-                                                         fill="black",
-                                                         width=1,
-                                                         tags="VerticalLine_tag") #dash=(10)
-                    #######################################################
-                    #######################################################
-                    '''
                     
                 except:
                     exceptions = sys.exc_info()[0]
