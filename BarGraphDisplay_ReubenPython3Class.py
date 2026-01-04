@@ -6,12 +6,20 @@ reuben.brewer@gmail.com
 www.reubotics.com
 
 Apache 2 License
-Software Revision B, 08/31/2024
+Software Revision C, 12/29/2025
 
-Verified working on: Python 3.8 for Windows 10 64-bit (no Ubuntu, Raspberry Pi, or Mac testing yet).
+Verified working on: Python 3.11/12/13 for Windows 10/11 64-bit, Ubuntu 20.04, and Raspberry Pi Bookworm (no Mac testing yet).
 '''
 
 __author__ = 'reuben.brewer'
+
+##########################################################################################################
+##########################################################################################################
+
+#################################################
+import ReubenGithubCodeModulePaths #Replaces the need to have "ReubenGithubCodeModulePaths.pth" within "C:\Anaconda3\Lib\site-packages".
+ReubenGithubCodeModulePaths.Enable()
+#################################################
 
 #################################################
 import os
@@ -39,11 +47,14 @@ if platform.system() == "Windows":
     winmm.timeBeginPeriod(1) #Set minimum timer resolution to 1ms so that time.sleep(0.001) behaves properly.
 #################################################
 
+##########################################################################################################
+##########################################################################################################
+
 class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
     ##########################################################################################################
     ##########################################################################################################
-    def __init__(self, setup_dict): #Subclass the Tkinter Frame
+    def __init__(self, SetupDict): #Subclass the Tkinter Frame
 
         print("#################### BarGraphDisplay_ReubenPython3Class __init__ starting. ####################")
 
@@ -87,16 +98,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "GUIparametersDict" in setup_dict:
-            self.GUIparametersDict = setup_dict["GUIparametersDict"]
-
-            ##########################################
-            if "root" in self.GUIparametersDict:
-                self.root = self.GUIparametersDict["root"]
-            else:
-                print("BarGraphDisplay_ReubenPython3Class __init__: ERROR, must pass in 'root'")
-                return
-            ##########################################
+        if "GUIparametersDict" in SetupDict:
+            self.GUIparametersDict = SetupDict["GUIparametersDict"]
 
             ##########################################
             if "GUI_ROW" in self.GUIparametersDict:
@@ -172,8 +175,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "Canvas_Width" in setup_dict:
-            self.Canvas_Width = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("Canvas_Width", setup_dict["Canvas_Width"], 100.0, 1000.0))
+        if "Canvas_Width" in SetupDict:
+            self.Canvas_Width = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("Canvas_Width", SetupDict["Canvas_Width"], 100.0, 1000.0))
         else:
             self.Canvas_Width = 250
 
@@ -183,8 +186,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
         
         #########################################################
         #########################################################
-        if "Canvas_Height" in setup_dict:
-            self.Canvas_Height = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("Canvas_Height", setup_dict["Canvas_Height"], 100.0, 1000.0))
+        if "Canvas_Height" in SetupDict:
+            self.Canvas_Height = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("Canvas_Height", SetupDict["Canvas_Height"], 100.0, 1000.0))
         else:
             self.Canvas_Height = 150
 
@@ -194,8 +197,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "BarWidth" in setup_dict:
-            self.BarWidth = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("BarWidth", setup_dict["BarWidth"], 10.0, 500.0))
+        if "BarWidth" in SetupDict:
+            self.BarWidth = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("BarWidth", SetupDict["BarWidth"], 10.0, 500.0))
         else:
             self.BarWidth = 10
 
@@ -205,8 +208,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "BarPadX" in setup_dict:
-            self.BarPadX = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("BarPadX", setup_dict["BarPadX"], 1.0, 100.0))
+        if "BarPadX" in SetupDict:
+            self.BarPadX = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("BarPadX", SetupDict["BarPadX"], 1.0, 100.0))
         else:
             self.BarPadX = 1
 
@@ -216,8 +219,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "FontSize" in setup_dict:
-            self.FontSize = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("FontSize", setup_dict["FontSize"], 8.0, 48.0))
+        if "FontSize" in SetupDict:
+            self.FontSize = int(self.PassThroughFloatValuesInRange_ExitProgramOtherwise("FontSize", SetupDict["FontSize"], 8.0, 48.0))
         else:
             self.FontSize = 8
 
@@ -227,8 +230,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "PositiveColor" in setup_dict:
-            self.PositiveColor = setup_dict["PositiveColor"]
+        if "PositiveColor" in SetupDict:
+            self.PositiveColor = SetupDict["PositiveColor"]
         else:
             self.PositiveColor = self.TKinter_LightGreenColor
 
@@ -238,8 +241,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        if "NegativeColor" in setup_dict:
-            self.NegativeColor = setup_dict["NegativeColor"]
+        if "NegativeColor" in SetupDict:
+            self.NegativeColor = SetupDict["NegativeColor"]
         else:
             self.NegativeColor = self.TKinter_LightRedColor
 
@@ -265,8 +268,8 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
             #########################################################
             #########################################################
             #########################################################
-            if "Variables_ListOfDicts" in setup_dict:
-                Variables_ListOfDicts_TEMP = setup_dict["Variables_ListOfDicts"]
+            if "Variables_ListOfDicts" in SetupDict:
+                Variables_ListOfDicts_TEMP = SetupDict["Variables_ListOfDicts"]
 
                 #########################################################
                 #########################################################
@@ -439,10 +442,38 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         #########################################################
         #########################################################
-        self.ProcessSetupDictInputsTheCanBeLiveChanged(setup_dict)
+        self.ProcessSetupDictInputsTheCanBeLiveChanged(SetupDict)
         #########################################################
         #########################################################
     
+        #########################################################
+        #########################################################
+        self.InitialUpdateHasBeenPerformedFlag = 0
+        #########################################################
+        #########################################################
+
+        #########################################################
+        #########################################################
+        self.OBJECT_CREATED_SUCCESSFULLY_FLAG = 1
+        #########################################################
+        #########################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    def CreateGUIobjects(self, TkinterParent):
+
+        print("BarGraphDisplay_ReubenPython3Class, CreateGUIobjects event fired.")
+
+        #################################################
+        #################################################
+        self.root = TkinterParent
+        self.parent = TkinterParent
+        #################################################
+        #################################################
+
         #########################################################
         #########################################################
         self.myFrame = Frame(self.root)
@@ -481,32 +512,12 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
         #########################################################
         #########################################################
 
-        #########################################################
-        #########################################################
-        self.InitialUpdateHasBeenPerformedFlag = 0
-        #########################################################
-        #########################################################
-        
-        #########################################################
-        #########################################################
-        time.sleep(0.1)
-        #########################################################
-        #########################################################
-
-        #########################################################
-        #########################################################
+        #################################################
+        #################################################
         self.GUI_ready_to_be_updated_flag = 1
-        self.OBJECT_CREATED_SUCCESSFULLY_FLAG = 1
-        #########################################################
-        #########################################################
+        #################################################
+        #################################################
 
-    ##########################################################################################################
-    ##########################################################################################################
-
-    ##########################################################################################################
-    ##########################################################################################################
-    def __del__(self):
-        pass
     ##########################################################################################################
     ##########################################################################################################
 
@@ -519,7 +530,7 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
     ##########################################################################################################
     ##########################################################################################################
-    def ProcessSetupDictInputsTheCanBeLiveChanged(self, setup_dict):
+    def ProcessSetupDictInputsTheCanBeLiveChanged(self, SetupDict):
         pass
 
     ##########################################################################################################
@@ -527,67 +538,200 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
     ##########################################################################################################
     ##########################################################################################################
-    def PassThrough0and1values_ExitProgramOtherwise(self, InputNameString, InputNumber):
+    def LimitNumber_IntOutputOnly(self, min_val, max_val, test_val):
+        if test_val > max_val:
+            test_val = max_val
 
+        elif test_val < min_val:
+            test_val = min_val
+
+        else:
+            test_val = test_val
+
+        test_val = int(test_val)
+
+        return test_val
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    def LimitNumber_FloatOutputOnly(self, min_val, max_val, test_val):
+        if test_val > max_val:
+            test_val = max_val
+
+        elif test_val < min_val:
+            test_val = min_val
+
+        else:
+            test_val = test_val
+
+        test_val = float(test_val)
+
+        return test_val
+    ##########################################################################################################
+    ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    ##########################################################################################################
+    def PassThrough0and1values_ExitProgramOtherwise(self, InputNameString, InputNumber, ExitProgramIfFailureFlag=1):
+
+        ##########################################################################################################
+        ##########################################################################################################
         try:
+
+            ##########################################################################################################
             InputNumber_ConvertedToFloat = float(InputNumber)
+            ##########################################################################################################
 
         except:
+
+            ##########################################################################################################
             exceptions = sys.exc_info()[0]
-            print("PassThrough0and1values_ExitProgramOtherwise Error. InputNumber must be a float value, Exceptions: %s" % exceptions)
-            input("Press any key to continue")
-            sys.exit()
+            print("PassThrough0and1values_ExitProgramOtherwise Error. InputNumber must be a numerical value, Exceptions: %s" % exceptions)
 
-        try:
-            if InputNumber_ConvertedToFloat == 0.0 or InputNumber_ConvertedToFloat == 1:
-                return InputNumber_ConvertedToFloat
-            else:
-                input("PassThrough0and1values_ExitProgramOtherwise Error. '" +
-                          InputNameString +
-                          "' must be 0 or 1 (value was " +
-                          str(InputNumber_ConvertedToFloat) +
-                          "). Press any key (and enter) to exit.")
-
+            ##########################
+            if ExitProgramIfFailureFlag == 1:
                 sys.exit()
+            else:
+                return -1
+            ##########################
+
+            ##########################################################################################################
+
+        ##########################################################################################################
+        ##########################################################################################################
+
+        ##########################################################################################################
+        ##########################################################################################################
+        try:
+
+            ##########################################################################################################
+            if InputNumber_ConvertedToFloat == 0.0 or InputNumber_ConvertedToFloat == 1.0:
+                return InputNumber_ConvertedToFloat
+
+            else:
+
+                print("PassThrough0and1values_ExitProgramOtherwise Error. '" +
+                      str(InputNameString) +
+                      "' must be 0 or 1 (value was " +
+                      str(InputNumber_ConvertedToFloat) +
+                      ").")
+
+                ##########################
+                if ExitProgramIfFailureFlag == 1:
+                    sys.exit()
+
+                else:
+                    return -1
+                ##########################
+
+            ##########################################################################################################
+
         except:
+
+            ##########################################################################################################
             exceptions = sys.exc_info()[0]
             print("PassThrough0and1values_ExitProgramOtherwise Error, Exceptions: %s" % exceptions)
-            #input("Press any key to continue")
-            #sys.exit()
+
+            ##########################
+            if ExitProgramIfFailureFlag == 1:
+                sys.exit()
+            else:
+                return -1
+            ##########################
+
+            ##########################################################################################################
+
+        ##########################################################################################################
+        ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
     ##########################################################################################################
     ##########################################################################################################
 
     ##########################################################################################################
     ##########################################################################################################
-    def PassThroughFloatValuesInRange_ExitProgramOtherwise(self, InputNameString, InputNumber, RangeMinValueue, RangeMaxValueue):
+    ##########################################################################################################
+    ##########################################################################################################
+    def PassThroughFloatValuesInRange_ExitProgramOtherwise(self, InputNameString, InputNumber, RangeMinValue, RangeMaxValue, ExitProgramIfFailureFlag=1):
+
+        ##########################################################################################################
+        ##########################################################################################################
         try:
+            ##########################################################################################################
             InputNumber_ConvertedToFloat = float(InputNumber)
+            ##########################################################################################################
 
         except:
+            ##########################################################################################################
             exceptions = sys.exc_info()[0]
             print("PassThroughFloatValuesInRange_ExitProgramOtherwise Error. InputNumber must be a float value, Exceptions: %s" % exceptions)
-            input("Press any key to continue")
-            sys.exit()
+            traceback.print_exc()
 
-        try:
-            if InputNumber_ConvertedToFloat >= RangeMinValueue and InputNumber_ConvertedToFloat <= RangeMaxValueue:
-                return InputNumber_ConvertedToFloat
-            else:
-                input("PassThroughFloatValuesInRange_ExitProgramOtherwise Error. '" +
-                          InputNameString +
-                          "' must be in the range [" +
-                          str(RangeMinValueue) +
-                          ", " +
-                          str(RangeMaxValueue) +
-                          "] (value was " +
-                          str(InputNumber_ConvertedToFloat) + "). Press any key (and enter) to exit.")
-
+            ##########################
+            if ExitProgramIfFailureFlag == 1:
                 sys.exit()
+            else:
+                return -11111.0
+            ##########################
+
+            ##########################################################################################################
+
+        ##########################################################################################################
+        ##########################################################################################################
+
+        ##########################################################################################################
+        ##########################################################################################################
+        try:
+
+            ##########################################################################################################
+            InputNumber_ConvertedToFloat_Limited = self.LimitNumber_FloatOutputOnly(RangeMinValue, RangeMaxValue, InputNumber_ConvertedToFloat)
+
+            if InputNumber_ConvertedToFloat_Limited != InputNumber_ConvertedToFloat:
+                print("PassThroughFloatValuesInRange_ExitProgramOtherwise Error. '" +
+                      str(InputNameString) +
+                      "' must be in the range [" +
+                      str(RangeMinValue) +
+                      ", " +
+                      str(RangeMaxValue) +
+                      "] (value was " +
+                      str(InputNumber_ConvertedToFloat) + ")")
+
+                ##########################
+                if ExitProgramIfFailureFlag == 1:
+                    sys.exit()
+                else:
+                    return -11111.0
+                ##########################
+
+            else:
+                return InputNumber_ConvertedToFloat_Limited
+            ##########################################################################################################
+
         except:
+            ##########################################################################################################
             exceptions = sys.exc_info()[0]
             print("PassThroughFloatValuesInRange_ExitProgramOtherwise Error, Exceptions: %s" % exceptions)
-            #input("Press any key to continue")
-            #sys.exit()
+            traceback.print_exc()
+
+            ##########################
+            if ExitProgramIfFailureFlag == 1:
+                sys.exit()
+            else:
+                return -11111.0
+            ##########################
+
+            ##########################################################################################################
+
+        ##########################################################################################################
+        ##########################################################################################################
+
+    ##########################################################################################################
+    ##########################################################################################################
     ##########################################################################################################
     ##########################################################################################################
 
@@ -613,24 +757,6 @@ class BarGraphDisplay_ReubenPython3Class(Frame): #Subclass the Tkinter Frame
 
         result = isinstance(InputToCheck, list)
         return result
-    ##########################################################################################################
-    ##########################################################################################################
-
-    ##########################################################################################################
-    ##########################################################################################################
-    def LimitNumber_FloatOutputOnly(self, min_val, max_val, test_val):
-        if test_val > max_val:
-            test_val = max_val
-
-        elif test_val < min_val:
-            test_val = min_val
-
-        else:
-            test_val = test_val
-
-        test_val = float(test_val)
-
-        return test_val
     ##########################################################################################################
     ##########################################################################################################
 
