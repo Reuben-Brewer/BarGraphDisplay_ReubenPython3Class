@@ -12,22 +12,22 @@ www.reubotics.com
 
 Apache 2 License
 
-Software Revision B, 08/31/2024
+Software Revision C, 12/29/2025
 
 Verified working on:
 
-Python 3.8 for Windows 10 64-bit (no Ubuntu, Raspberry Pi, or Mac testing yet).
+Python 3.11/12/13 for Windows 10/11 64-bit, Ubuntu 20.04, and Raspberry Pi Bookworm (no Mac testing yet).
 
 ########################  
 
 ########################### Python module installation instructions, all OS's
 
-BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies: []
+BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies: ['ReubenGithubCodeModulePaths']
 
-BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies_TestProgram: ['MyPrint_ReubenPython2and3Class']
+BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies_TestProgram: ['MyPrint_ReubenPython2and3Class', 'ReubenGithubCodeModulePaths']
 
-BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies_NestedLayers: ['future.builtins']
+BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies_NestedLayers: []
 
-BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies_All:['future.builtins', 'MyPrint_ReubenPython2and3Class']
+BarGraphDisplay_ReubenPython3Class, ListOfModuleDependencies_All:['MyPrint_ReubenPython2and3Class', 'ReubenGithubCodeModulePaths']
 
 ###########################
